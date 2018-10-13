@@ -1,5 +1,10 @@
 # vuevuevue
 
+`Vue CLI v3.0.5`
+`npm 5.6.0`
+`node v10.1.0`
+`webpack`
+
 ## Project setup
 ```
 npm install
