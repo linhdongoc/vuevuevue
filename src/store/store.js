@@ -1,12 +1,16 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import EventService from '@/services/EventService.js'
+import * as user from '@/store/modules/user.js'
+import * as event from '@/store/modules/event.js'
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
+  modules: {
+    user,
+    event
+  },
   state: {
-    user: { id: 'abc123', name: 'Adam Jahr' },
     categories: [
       'sustainability',
       'nature',
@@ -24,19 +28,7 @@ export default new Vuex.Store({
       { id: 5, text: 'TODO 5', done: false },
       { id: 6, text: 'TODO 6', done: false },
       { id: 7, text: 'TODO 7', done: true }
-    ],
-    events: []
-  },
-  mutations: {
-    ADD_EVENT(state, event) {
-      state.events.push(event)
-    }
-  },
-  actions: {
-    createEvent({ commit }, event) {
-      EventService.postEvent(event)
-      commit('ADD_EVENT', event)
-    }
+    ]
   },
   getters: {
     categoryLength: state => {
@@ -50,9 +42,6 @@ export default new Vuex.Store({
     },
     activeTodosCount: state => {
       return state.todos.filter(todo => !todo.done)
-    },
-    getEventById: state => id => {
-      return state.events.find(event => event.id === id)
     }
   }
 })

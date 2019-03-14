@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1>Create an Event</h1>
-    <form>
+    <form @submit.prevent="createEvent">
       <label>Select a category</label>
       <select v-model="event.category">
         <option v-for="cat in categories" :key="cat">{{ cat }}</option>
@@ -40,7 +40,6 @@
 import Datepicker from 'vuejs-datepicker'
 
 export default {
-  name: 'EventCreate',
   components: {
     Datepicker
   },
@@ -50,17 +49,34 @@ export default {
       times.push(i + ':00')
     }
     return {
-      event: this.createFreshEvent(),
+      event: this.createFreshEventObject(),
       categories: this.$store.state.categories,
       times
     }
   },
   methods: {
-    createFreshEvent() {
-      const user = this.$store.state.user
+    createEvent() {
+      this.$store
+        .dispatch('event/createEvent', this.event)
+        .then(() => {
+          this.$router.push({
+            name: 'event-show',
+            params: { id: this.event.id }
+          })
+          this.event = this.createFreshEventObject()
+        })
+        .catch(() => {
+          /*eslint-disable no-console*/
+          console.log('There was a problem creating your event')
+        })
+    },
+    createFreshEventObject() {
+      const user = this.$store.state.user.user
       const id = Math.floor(Math.random() * 10000000)
+
       return {
         id: id,
+        user: user,
         category: '',
         organizer: user,
         title: '',
