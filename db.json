@@ -499,6 +499,60 @@
       "date": "",
       "time": "1:00",
       "attendees": []
+    },
+    {
+      "id": 6258252,
+      "user": {
+        "id": "abc123",
+        "name": "Adam Jahr"
+      },
+      "category": "nature",
+      "organizer": {
+        "id": "abc123",
+        "name": "Adam Jahr"
+      },
+      "title": "Title 1",
+      "description": "Description 1",
+      "location": "London",
+      "date": "2019-06-30T15:01:00.000Z",
+      "time": "8:00",
+      "attendees": []
+    },
+    {
+      "id": 1202488,
+      "user": {
+        "id": "abc123",
+        "name": "Adam"
+      },
+      "category": "food",
+      "organizer": {
+        "id": "abc123",
+        "name": "Adam"
+      },
+      "title": "pho bo",
+      "description": "",
+      "location": "",
+      "date": "",
+      "time": "",
+      "attendees": []
+    },
+    {
+      "id": 63210,
+      "user": {
+        "id": "abc123",
+        "name": "Adam"
+      },
+      "category": "community",
+      "organizer": {
+        "id": "abc123",
+        "name": "Adam"
+      },
+      "title": "ruby",
+      "description": "",
+      "location": "munich",
+      "date": "2019-06-13T19:22:00.000Z",
+      "time": "",
+      "attendees": []
     }
   ]
 }

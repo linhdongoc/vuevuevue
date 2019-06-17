@@ -29,3 +29,8 @@ npm run test
 ```
 npm run lint
 ```
+### JSON Server
+```
+npm install -g json-server
+json-server db.json
+```

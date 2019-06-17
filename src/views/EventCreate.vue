@@ -49,9 +49,9 @@ export default {
       times.push(i + ':00')
     }
     return {
+      times,
       event: this.createFreshEventObject(),
-      categories: this.$store.state.categories,
-      times
+      categories: this.$store.state.categories
     }
   },
   methods: {
