@@ -6,7 +6,6 @@ import upperFirst from 'lodash/upperFirst'
 import camelCase from 'lodash/camelCase'
 import VueAxios from 'vue-axios'
 import { securedAxiosInstance, plainAxiosInstance } from './backend/axios'
-import './assets/styles/tailwind.css'
 
 const requireComponent = require.context(
   './components',
