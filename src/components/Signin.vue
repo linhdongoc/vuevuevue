@@ -1,21 +1,32 @@
 <template>
-  <div class="max-w-sm m-auto my-8">
-    <div class="border p-10 border-grey-light shadow rounded">
-      <h3 class="text-2xl mb-6 text-grey-darkest">Sign In</h3>
+  <div>
+    <div>
+      <h3>Sign In</h3>
       <form @submit.prevent="signin">
-        <div class="text-red" v-if="error">{{ error }}</div>
-        <div class="mb-6">
-          <label for="email" class="label">E-Mail Adresse</label>
-          <input type="email" v-model="email" class="input" id="email" placeholder="user@example.de">
+        <div v-if="error">{{ error }}</div>
+        <div>
+          <label for="email" class="label">E-Mail</label>
+          <input
+            v-model="email"
+            id="email"
+            type="email"
+            class="input"
+            placeholder="user@example.de"
+          />
         </div>
-        <div class="mb-6">
+        <div>
           <label for="password" class="label">Password</label>
-          <input type="password" v-model="password" class="input" id="password" placeholder="Password">
+          <input
+            type="password"
+            v-model="password"
+            class="input"
+            id="password"
+            placeholder="Password"
+          />
         </div>
-        <button type="submit" class="font-sans font-bold px-4 rounded cursor-pointer no-underline bg-green
-        hover:bg-green-dark block w-full py-4 text-white items-center justify-center">Sign In</button>
-        <div class="my-4">
-          <router-link to="/signup" class="link-grey">Sign up</router-link>
+        <button type="submit">Sign In</button>
+        <div>
+          <router-link to="/signup">Sign up</router-link>
         </div>
       </form>
     </div>
@@ -58,7 +69,7 @@ export default {
     signinFailed(error) {
       this.error =
         (error.response && error.response.data && error.response.data.error) ||
-        ''
+        'Something went wrong'
       delete localStorage.csrf
       delete localStorage.signedIn
     },

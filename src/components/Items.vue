@@ -1,40 +1,38 @@
 <template>
-  <div class="max-w-md m-auto py-10">
-    <div class="text-red" v-if="error">{{ error }}</div>
-    <h3 class="font-mono font-regular text-3xl mb-4">Add a new item</h3>
+  <div>
+    <div v-if="error">{{ error }}</div>
+    <h3>Add a new item</h3>
     <form action="" @submit.prevent="addItem">
-      <div class="mb-6">
-        <input class="input"
-               autofocus autocomplete="off"
-               placeholder="Type a item title"
-               v-model="newItem.name" />
+      <div>
+        <input
+          class="input"
+          autofocus
+          autocomplete="off"
+          placeholder="Type a item title"
+          v-model="newItem.name"
+        />
       </div>
-      <input type="submit" value="Add Item" class="font-sans font-bold px-4 rounded cursor-pointer no-underline bg-green hover:bg-green-dark block w-full py-4 text-white items-center justify-center" />
+      <input type="submit" value="Add Item" />
     </form>
 
-    <hr class="border border-grey-light my-6" />
+    <hr />
 
-    <ul class="list-reset mt-4">
-      <li class="py-4" v-for="item in items" :key="item.id" :item="item">
-
-        <div class="flex items-center justify-between flex-wrap">
-          <p class="block flex-1 font-mono font-semibold flex items-center ">
-            <svg class="fill-current text-indigo w-6 h-6 mr-2" viewBox="0 0 20 20" width="20" height="20"><title>Item</title><path d="M15.75 8l-3.74-3.75a3.99 3.99 0 0 1 6.82-3.08A4 4 0 0 1 15.75 8zm-13.9 7.3l9.2-9.19 2.83 2.83-9.2 9.2-2.82-2.84zm-1.4 2.83l2.11-2.12 1.42 1.42-2.12 2.12-1.42-1.42zM10 15l2-2v7h-2v-5z"></path></svg>
+    <ul>
+      <li v-for="item in items" :key="item.id" :item="item">
+        <div>
+          <p>
+            <title>Item</title>
             {{ item.name }}
           </p>
-
-          <button class="bg-tranparent text-sm hover:bg-blue hover:text-white text-blue border border-blue no-underline font-bold py-2 px-4 mr-2 rounded"
-                  @click.prevent="editItem(item)">Edit</button>
-
-          <button class="bg-transprent text-sm hover:bg-red text-red hover:text-white no-underline font-bold py-2 px-4 rounded border border-red"
-                  @click.prevent="removeItem(item)">Delete</button>
+          <button @click.prevent="editItem(item)">Edit</button>
+          <button @click.prevent="removeItem(item)">Delete</button>
         </div>
 
         <div v-if="item == editedItem">
           <form action="" @submit.prevent="updateItem(item)">
-            <div class="mb-6 p-4 bg-white rounded border border-grey-light mt-4">
+            <div>
               <input class="input" v-model="item.name" />
-              <input type="submit" value="Update" class=" my-2 bg-transparent text-sm hover:bg-blue hover:text-white text-blue border border-blue no-underline font-bold py-2 px-4 rounded cursor-pointer">
+              <input type="submit" value="Update" />
             </div>
           </form>
         </div>

@@ -1,21 +1,32 @@
 <template>
   <div>
     <h1>Events for {{ user.user.name }}</h1>
-    <EventCard v-for="event in event.events" :key="event.id" :event="event"></EventCard>
+    <EventCard
+      v-for="event in event.events"
+      :key="event.id"
+      :event="event"
+    ></EventCard>
     <template v-if="page !== 1">
-      <router-link :to="{ name: 'event-list', query: { page: page - 1 }}" rel="prev">
+      <router-link
+        :to="{ name: 'event-list', query: { page: page - 1 } }"
+        rel="prev"
+      >
         Prev Page
       </router-link>
       <template v-if="hasNextPage">&nbsp; | &nbsp;</template>
     </template>
-    <router-link v-if="hasNextPage" :to="{ name: 'event-list', query: { page: page + 1 }}" rel="next">
+    <router-link
+      v-if="hasNextPage"
+      :to="{ name: 'event-list', query: { page: page + 1 } }"
+      rel="next"
+    >
       Next Page
     </router-link>
   </div>
 </template>
 
 <script>
-import EventCard from '@/components/EventCard'
+import EventCard from '@/components/EventCard.vue'
 import { mapState } from 'vuex'
 
 export default {
@@ -41,5 +52,4 @@ export default {
 }
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

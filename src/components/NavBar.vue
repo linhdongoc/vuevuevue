@@ -1,17 +1,50 @@
 <template>
   <div id="nav">
-    <router-link to="/" class="brand">Real Word Events</router-link>
+    <router-link to="/" class="brand">VUEVUEVUE</router-link>
     <nav>
-      <router-link :to="{ name: 'event-list' }">List</router-link>
-      |
-      <router-link :to="{ name: 'event-create' }">Create</router-link>
+      <router-link to="/" v-if="!signedIn()">Sign in</router-link>
+      <router-link to="/signup" v-if="!signedIn()">Sign Up</router-link>
+      <router-link to="/books" v-if="signedIn()">Books</router-link>
+      <router-link to="/items" v-if="signedIn()">Items</router-link>
+      <router-link to="/todo_lists" v-if="signedIn()">Todo Lists</router-link>
+      <router-link :to="{ name: 'event-list' }" v-if="signedIn()"
+        >Events</router-link
+      >
+      <router-link :to="{ name: 'event-create' }" v-if="signedIn()"
+        >Create Event</router-link
+      >
+      <a href="#" @click.prevent="signOut" v-if="signedIn()">Sign out</a>
     </nav>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'NavBar'
+  name: 'NavBar',
+  created() {
+    this.signedIn()
+  },
+  methods: {
+    setError(error, text) {
+      this.error =
+        (error.response && error.response.data && error.response.data.error) ||
+        text
+    },
+    signedIn() {
+      return localStorage.signedIn
+    },
+    signOut() {
+      this.$http.secured
+        .delete('/signin')
+        // eslint-disable-next-line
+        .then(response => {
+          delete localStorage.csrf
+          delete localStorage.signedIn
+          this.$router.replace('/')
+        })
+        .catch(error => this.setError(error, 'Cannot sign out'))
+    }
+  }
 }
 </script>
 

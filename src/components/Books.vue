@@ -1,40 +1,40 @@
 <template>
-  <div class="max-w-md m-auto py-10">
-    <div class="text-red" v-if="error">{{ error }}</div>
-    <h3 class="font-mono font-regular text-3xl mb-4">Add a new book</h3>
-    <form action="" @submit.prevent="addBook">
-      <div class="mb-6">
-        <input class="input"
-               autofocus autocomplete="off"
-               placeholder="Type a book title"
-               v-model="newBook.title" />
+  <div>
+    <div v-if="error">{{ error }}</div>
+    <h1>Books</h1>
+    <h3>Add a new book</h3>
+    <form @submit.prevent="addBook">
+      <div class="field">
+        <label>Title</label>
+        <input
+          type="text"
+          autofocus
+          autocomplete="off"
+          placeholder="Add a book title"
+          v-model="newBook.title"
+        />
       </div>
-      <input type="submit" value="Add Book" class="font-sans font-bold px-4 rounded cursor-pointer no-underline bg-green hover:bg-green-dark block w-full py-4 text-white items-center justify-center" />
+      <input type="submit" value="Save" />
     </form>
-
-    <hr class="border border-grey-light my-6" />
-
-    <ul class="list-reset mt-4">
-      <li class="py-4" v-for="book in books" :key="book.id" :book="book">
-
-        <div class="flex items-center justify-between flex-wrap">
-          <p class="block flex-1 font-mono font-semibold flex items-center ">
-            <svg class="fill-current text-indigo w-6 h-6 mr-2" viewBox="0 0 20 20" width="20" height="20"><title>Book</title><path d="M15.75 8l-3.74-3.75a3.99 3.99 0 0 1 6.82-3.08A4 4 0 0 1 15.75 8zm-13.9 7.3l9.2-9.19 2.83 2.83-9.2 9.2-2.82-2.84zm-1.4 2.83l2.11-2.12 1.42 1.42-2.12 2.12-1.42-1.42zM10 15l2-2v7h-2v-5z"></path></svg>
-            {{ book.title }}
-          </p>
-
-          <button class="bg-tranparent text-sm hover:bg-blue hover:text-white text-blue border border-blue no-underline font-bold py-2 px-4 mr-2 rounded"
-                  @click.prevent="editBook(book)">Edit</button>
-
-          <button class="bg-transprent text-sm hover:bg-red text-red hover:text-white no-underline font-bold py-2 px-4 rounded border border-red"
-                  @click.prevent="removeBook(book)">Delete</button>
+    <hr />
+    <h3>List all books</h3>
+    <ul class="list-group">
+      <li v-for="book in books" :key="book.id" :book="book" class="list-item">
+        <div>
+          <p>{{ book.title }}</p>
+          <p>{{ book.created_at }}</p>
+          <p>{{ book.updated_at }}</p>
+          <button @click.prevent="editBook(book)">Edit</button>
+          <button @click.prevent="removeBook(book)">Delete</button>
         </div>
 
         <div v-if="book == editedBook">
-          <form action="" @submit.prevent="updateBook(book)">
-            <div class="mb-6 p-4 bg-white rounded border border-grey-light mt-4">
-              <input class="input" v-model="book.title" />
-              <input type="submit" value="Update" class=" my-2 bg-transparent text-sm hover:bg-blue hover:text-white text-blue border border-blue no-underline font-bold py-2 px-4 rounded cursor-pointer">
+          <form @submit.prevent="updateBook(book)">
+            <div class="field">
+              <label>Title</label>
+              <input class="input" type="text" v-model="book.title" />
+              <input type="submit" value="Update" />
+              <button @click.prevent="cancelBook()">Cancel</button>
             </div>
           </form>
         </div>
@@ -103,7 +103,25 @@ export default {
       this.$http.secured
         .patch(`/api/v1/books/${book.id}`, { book: { title: book.title } })
         .catch(error => this.setError(error, 'Cannot update book'))
+    },
+    cancelBook() {
+      this.editedBook = ''
     }
   }
 }
 </script>
+
+<style scoped>
+.field {
+  margin-bottom: 24px;
+}
+.list-group {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.list-group > .list-item {
+  padding: 1em 0;
+  border-bottom: solid 1px #e5e5e5;
+}
+</style>

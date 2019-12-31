@@ -25,7 +25,7 @@ securedAxiosInstance.interceptors.request.use(config => {
   }
   return config
 })
-securedAxiosInstance.interceptors.request.use(null, error => {
+securedAxiosInstance.interceptors.response.use(null, error => {
   if (
     error.response &&
     error.response.config &&
