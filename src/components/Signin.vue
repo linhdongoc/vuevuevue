@@ -64,7 +64,7 @@ export default {
       localStorage.csrf = response.data.csrf
       localStorage.signedIn = true
       this.error = ''
-      this.$router.replace('/books')
+      this.$router.replace('/dashboard')
     },
     signinFailed(error) {
       this.error =
@@ -75,7 +75,7 @@ export default {
     },
     checkSignedIn() {
       if (localStorage.signedIn) {
-        this.$router.replace('/books')
+        this.$router.replace('/dashboard')
       }
     }
   }

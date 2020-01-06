@@ -22,8 +22,8 @@
       <li v-for="book in books" :key="book.id" :book="book" class="list-item">
         <div>
           <p>{{ book.title }}</p>
-          <p>{{ book.created_at }}</p>
-          <p>{{ book.updated_at }}</p>
+          <p>{{ handleDatetime(book.created_at) }}</p>
+          <p>{{ handleDatetime(book.updated_at) }}</p>
           <button @click.prevent="editBook(book)">Edit</button>
           <button @click.prevent="removeBook(book)">Delete</button>
         </div>
@@ -34,7 +34,7 @@
               <label>Title</label>
               <input class="input" type="text" v-model="book.title" />
               <input type="submit" value="Update" />
-              <button @click.prevent="cancelBook()">Cancel</button>
+              <button @click.prevent="cancel()">Cancel</button>
             </div>
           </form>
         </div>
@@ -72,6 +72,22 @@ export default {
         (error.response && error.response.data && error.response.data.error) ||
         text
     },
+    handleDatetime(value) {
+      let d = new Date(value)
+      return (
+        d.getDate() +
+        '.' +
+        d.getMonth() +
+        '.' +
+        d.getFullYear() +
+        ' - ' +
+        d.getHours() +
+        ':' +
+        d.getMinutes() +
+        ':' +
+        d.getSeconds()
+      )
+    },
     addBook() {
       const value = this.newBook
       if (!value) {
@@ -79,7 +95,6 @@ export default {
       }
       this.$http.secured
         .post('/api/v1/books/', { book: { title: this.newBook.title } })
-
         .then(response => {
           this.books.push(response.data)
           this.newBook = ''
@@ -104,7 +119,7 @@ export default {
         .patch(`/api/v1/books/${book.id}`, { book: { title: book.title } })
         .catch(error => this.setError(error, 'Cannot update book'))
     },
-    cancelBook() {
+    cancel() {
       this.editedBook = ''
     }
   }

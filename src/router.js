@@ -8,12 +8,24 @@ import Signup from './components/Signup'
 import Books from './components/Books'
 import Items from './components/Items'
 import TodoLists from './components/TodoLists'
+import Dashboard from './views/Dashboard'
+import Home from './views/Home'
 
 Vue.use(Router)
 
 export default new Router({
   mode: 'history',
   routes: [
+    {
+      path: '/',
+      name: 'home',
+      component: Home
+    },
+    {
+      path: '/dashboard',
+      name: 'Dashboard',
+      component: Dashboard
+    },
     {
       path: '/books',
       name: 'Books',
@@ -30,7 +42,7 @@ export default new Router({
       component: TodoLists
     },
     {
-      path: '/',
+      path: '/signin',
       name: 'Signin',
       component: Signin
     },

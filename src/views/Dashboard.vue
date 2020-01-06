@@ -1,28 +1,19 @@
 <template>
   <div>
     <div v-if="error">{{ error }}</div>
-    <h1>Events</h1>
-    <h3>Add an Event</h3>
-    <EventCreate />
-    <hr />
-    <h3>List all events</h3>
-    <EventCard
-      v-for="event in events"
-      :key="event.id"
-      :event="event"
-    ></EventCard>
+    <h1>Dashboard</h1>
+    <div v-if="isLoading">
+      Loading events ...
+    </div>
   </div>
 </template>
 
 <script>
-import EventCard from '../components/EventCard.vue'
-import EventCreate from './EventCreate'
-
 export default {
-  name: 'event',
-  components: { EventCard, EventCreate },
+  name: 'Dashboard',
   data() {
     return {
+      isLoading: true,
       events: [],
       error: ''
     }
@@ -35,6 +26,7 @@ export default {
         .get('/api/v1/events')
         .then(response => {
           this.events = response.data
+          this.isLoading = false
         })
         .catch(error => this.setError(error, 'Something went wrong'))
     }
@@ -44,9 +36,8 @@ export default {
       this.error =
         (error.response && error.response.data && error.response.data.error) ||
         text
+      this.isLoading = true
     }
   }
 }
 </script>
-
-<style scoped></style>

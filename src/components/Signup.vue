@@ -5,6 +5,16 @@
       <form @submit.prevent="signup">
         <div v-if="error">{{ error }}</div>
         <div>
+          <label for="name" class="label">Username</label>
+          <input
+            type="text"
+            v-model="name"
+            class="input"
+            id="name"
+            placeholder="username"
+          />
+        </div>
+        <div>
           <label for="email" class="label">E-Mail</label>
           <input
             type="email"
@@ -39,7 +49,7 @@
         </div>
         <button type="submit">Sign Up</button>
         <div>
-          <router-link to="/">Sign In</router-link>
+          <router-link to="/signin">Sign In</router-link>
         </div>
       </form>
     </div>
@@ -51,6 +61,7 @@ export default {
   name: 'Signup',
   data() {
     return {
+      name: '',
       email: '',
       password: '',
       password_confirmation: '',
@@ -82,7 +93,7 @@ export default {
       localStorage.csrf = response.data.csrf
       localStorage.signedIn = true
       this.error = ''
-      this.$router.replace('/books')
+      this.$router.replace('/dashboard')
     },
     signupFailed(error) {
       this.error =
@@ -93,7 +104,7 @@ export default {
     },
     checkedSignedIn() {
       if (localStorage.signedIn) {
-        this.$router.replace('/books')
+        this.$router.replace('/dashboard')
       }
     }
   }

@@ -1,21 +1,32 @@
 <template>
   <div>
     <div class="event-header">
-      <span class="eyebrow">@{{ event.time }} on {{ event.date }}</span>
-      <h1 class="title">{{ event.title }}</h1>
-      <h5>Organized by {{ event.organizer ? event.organizer.name : '' }}</h5>
-      <h5>Category: {{ event.category }}</h5>
+      <h2 class="title">{{ event.title }}</h2>
+      <p>Start {{ handleEventTermDate(event.term_start) }}</p>
+      <p>End {{ handleEventTermDate(event.term_end) }}</p>
+      <p>
+        Organized by
+        {{ event.organizers ? event.organizers.join(', ') : 'n.a' }}
+      </p>
+      <p>
+        Categories:
+        {{
+          event.categories.length > 1
+            ? event.categories.join(', ')
+            : event.categories.toString()
+        }}
+      </p>
     </div>
-    <BaseIcon name="map"><h2>Location</h2></BaseIcon>
+    <BaseIcon name="map"><p>Location</p></BaseIcon>
     <address class="location">{{ event.location }}</address>
-    <h2>Event details</h2>
+    <h3>Event details</h3>
     <p>{{ event.description }}</p>
-    <h2>
+    <h3>
       Attendees
       <span class="badge -fill-gradient">{{
         event.attendees ? event.attendees.length : 0
       }}</span>
-    </h2>
+    </h3>
     <ul class="list-group">
       <li
         v-for="(attendee, index) in event.attendees"
@@ -29,17 +40,49 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex'
-
 export default {
   props: ['id'],
-  created() {
-    this.fetchEvent(this.id)
+  data() {
+    return {
+      event: '',
+      error: ''
+    }
   },
-  computed: mapState({
-    event: state => state.event.event
-  }),
-  methods: mapActions('event', ['fetchEvent'])
+  created() {
+    if (!localStorage.signedIn) {
+      this.$router.replace('/')
+    } else {
+      this.$http.secured
+        .get(`/api/v1/events/${this.id}`)
+        .then(response => {
+          this.event = response.data
+        })
+        .catch(error => this.setError(error, 'Something went wrong'))
+    }
+  },
+  methods: {
+    setError(error, text) {
+      this.error =
+        (error.response && error.response.data && error.response.data.error) ||
+        text
+    },
+    handleEventTermDate(value) {
+      let d = new Date(value)
+      return (
+        d.getDate() +
+        '/' +
+        d.getMonth() +
+        '/' +
+        d.getFullYear() +
+        ' - ' +
+        d.getHours() +
+        ':' +
+        d.getMinutes() +
+        ':' +
+        d.getSeconds()
+      )
+    }
+  }
 }
 </script>
 

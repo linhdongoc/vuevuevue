@@ -4,9 +4,12 @@
     :to="{ name: 'event-show', params: { id: event.id } }"
   >
     <div class="event-card -shadow">
-      <span class="eyebrow">@{{ event.time }} on {{ event.date }}</span>
+      <span class="eyebrow"
+        >{{ handleDatetime(event.term_start) }}
+        {{ handleDatetime(event.term_end) }}</span
+      >
       <h4 class="title">{{ event.title }}</h4>
-      <BaseIcon name="users">{{ event.attendees.length }} attending</BaseIcon>
+      <BaseIcon name="users">{{ event.attendees }} attending</BaseIcon>
     </div>
   </router-link>
 </template>
@@ -18,7 +21,30 @@ export default {
   name: 'EventCard',
   components: { BaseIcon },
   props: {
-    event: Object
+    event: {
+      type: Object,
+      default: () => {
+        return {}
+      }
+    }
+  },
+  methods: {
+    handleDatetime(value) {
+      let d = new Date(value)
+      return (
+        d.getDate() +
+        '.' +
+        d.getMonth() +
+        '.' +
+        d.getFullYear() +
+        ' - ' +
+        d.getHours() +
+        ':' +
+        d.getMinutes() +
+        ':' +
+        d.getSeconds()
+      )
+    }
   }
 }
 </script>
