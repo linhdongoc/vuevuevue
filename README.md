@@ -34,3 +34,8 @@ npm run lint
 npm install -g json-server
 json-server db.json
 ```
+### Upgrade package-lock.json
+```
+npm update
+npm audit fix
+```
