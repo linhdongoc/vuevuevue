@@ -1,4 +1,5 @@
 # vuevuevue
+[![Netlify Status](https://api.netlify.com/api/v1/badges/c4b4892a-dad6-4c2f-bc29-2f4cbe53424b/deploy-status)](https://app.netlify.com/sites/vuevuevue/deploys)
 
 `Vue CLI v3.0.5`
 `npm 5.6.0`
