@@ -15,7 +15,7 @@
     "fs-extra": "^7.0.1",
     "lodash": "^4.17.21",
     "npm": "^6.14.5",
-    "tar": "^4.4.13",
+    "tar": "^4.4.18",
     "vue": "^2.6.11",
     "vue-axios": "^2.1.5",
     "vue-flatpickr-component": "^8.1.5",
